@@ -1,0 +1,227 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Oracle Life App Design System - Spiritual Finance Theme */
+
+@layer base {
+  :root {
+    /* Core Colors - Inspired by spiritual wisdom and financial prosperity */
+    --background: 220 15% 4%;
+    --foreground: 45 100% 92%;
+
+    --card: 220 15% 6%;
+    --card-foreground: 45 100% 92%;
+
+    --popover: 220 15% 6%;
+    --popover-foreground: 45 100% 92%;
+
+    /* Primary - Divine Gold */
+    --primary: 45 100% 51%;
+    --primary-foreground: 220 15% 4%;
+    --primary-glow: 45 100% 65%;
+
+    /* Secondary - Spiritual Blue */
+    --secondary: 210 100% 45%;
+    --secondary-foreground: 45 100% 92%;
+
+    /* Accent - Wisdom Purple */
+    --accent: 270 75% 60%;
+    --accent-foreground: 45 100% 92%;
+
+    /* Spiritual blue for spiritual elements */
+    --spiritual: 258 100% 70%;
+    --spiritual-foreground: 258 100% 15%;
+  
+    /* Health orange for health & fitness */
+    --health: 24 100% 60%;
+    --health-foreground: 24 100% 95%;
+  
+    /* Family pink for family & love */
+    --family: 315 85% 65%;
+    --family-foreground: 315 85% 95%;
+
+    /* Muted tones */
+    --muted: 220 15% 12%;
+    --muted-foreground: 220 10% 60%;
+
+    /* Success - Prosperity Green */
+    --success: 120 75% 45%;
+    --success-foreground: 45 100% 92%;
+
+    /* Warning - Caution Orange */
+    --warning: 35 100% 55%;
+    --warning-foreground: 220 15% 4%;
+
+    /* Destructive - Alert Red */
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 45 100% 92%;
+
+    /* Borders and inputs */
+    --border: 220 15% 20%;
+    --input: 220 15% 20%;
+    --ring: 45 100% 51%;
+
+    --radius: 0.75rem;
+
+    /* Custom gradients */
+    --gradient-divine: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-spiritual: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--accent)));
+    --gradient-prosperity: linear-gradient(135deg, hsl(var(--success)), hsl(var(--primary)));
+    --gradient-wisdom: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--secondary)));
+
+    /* Shadows with spiritual glow */
+    --shadow-divine: 0 10px 40px -10px hsl(var(--primary) / 0.4);
+    --shadow-prosperity: 0 10px 40px -10px hsl(var(--success) / 0.3);
+    --shadow-wisdom: 0 10px 40px -10px hsl(var(--accent) / 0.3);
+
+    /* Animations */
+    --transition-divine: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-glow: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer components {
+  .gradient-divine {
+    background: var(--gradient-divine);
+  }
+
+  .gradient-spiritual {
+    background: var(--gradient-spiritual);
+  }
+
+  .gradient-prosperity {
+    background: var(--gradient-prosperity);
+  }
+
+  .gradient-wisdom {
+    background: var(--gradient-wisdom);
+  }
+
+  .shadow-divine {
+    box-shadow: var(--shadow-divine);
+  }
+
+  .shadow-prosperity {
+    box-shadow: var(--shadow-prosperity);
+  }
+
+  .shadow-wisdom {
+    box-shadow: var(--shadow-wisdom);
+  }
+
+  .transition-divine {
+    transition: var(--transition-divine);
+  }
+
+  .transition-glow {
+    transition: var(--transition-glow);
+  }
+
+  .glow-hover:hover {
+    filter: drop-shadow(0 0 20px hsl(var(--primary) / 0.6));
+    transform: translateY(-2px);
+  }
+
+  .card-elevated {
+    @apply bg-card border border-border shadow-lg backdrop-blur-sm;
+  }
+
+  .text-gradient-divine {
+    background: var(--gradient-divine);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-spiritual {
+    background: var(--gradient-spiritual);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glass-card {
+    @apply bg-card/80 backdrop-blur-md border border-border rounded-xl shadow-lg;
+  }
+
+  .gradient-text {
+    background: var(--gradient-divine);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glow-primary {
+    @apply shadow-divine hover:shadow-lg transition-all;
+  }
+
+  .glow-primary:hover {
+    filter: drop-shadow(0 0 20px hsl(var(--primary) / 0.6));
+  }
+}

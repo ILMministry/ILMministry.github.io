@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Divine Life Calendar Preview</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            background: linear-gradient(135deg, #1a1a2e, #16213e); 
+            color: white; 
+            margin: 0; 
+            padding: 20px; 
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header { 
+            text-align: center; 
+            background: rgba(255,255,255,0.1); 
+            padding: 30px; 
+            border-radius: 15px; 
+            margin-bottom: 20px; 
+        }
+        .title { 
+            font-size: 2.5em; 
+            background: linear-gradient(45deg, #ffd700, #ffed4e); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            margin: 0; 
+        }
+        .card { 
+            background: rgba(255,255,255,0.1); 
+            padding: 20px; 
+            margin: 20px 0; 
+            border-radius: 10px; 
+            border: 1px solid rgba(255,255,255,0.2); 
+        }
+        .btn { 
+            background: linear-gradient(45deg, #ffd700, #ffed4e); 
+            color: #1a1a2e; 
+            padding: 12px 24px; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            margin: 5px; 
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .budget-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 15px; 
+            margin: 20px 0; 
+        }
+        .budget-card { 
+            background: rgba(255,255,255,0.1); 
+            padding: 20px; 
+            text-align: center; 
+            border-radius: 10px; 
+        }
+        .amount { font-size: 1.8em; color: #ffd700; font-weight: bold; }
+        .calendar { 
+            display: grid; 
+            grid-template-columns: repeat(7, 1fr); 
+            gap: 2px; 
+            margin: 20px 0; 
+        }
+        .day { 
+            background: rgba(255,255,255,0.1); 
+            padding: 15px 5px; 
+            text-align: center; 
+            min-height: 60px; 
+            border-radius: 5px; 
+        }
+        .day:hover { background: rgba(255,215,0,0.2); }
+        .event-dot { 
+            width: 8px; 
+            height: 8px; 
+            background: #ffd700; 
+            border-radius: 50%; 
+            display: inline-block; 
+            margin: 2px; 
+        }
+        input, select { 
+            width: 100%; 
+            padding: 10px; 
+            margin: 5px 0; 
+            background: rgba(255,255,255,0.1); 
+            border: 1px solid rgba(255,255,255,0.3); 
+            border-radius: 5px; 
+            color: white; 
+        }
+        .tab { 
+            background: rgba(255,255,255,0.1); 
+            padding: 10px 20px; 
+            margin: 5px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            display: inline-block; 
+        }
+        .tab.active { background: linear-gradient(45deg, #ffd700, #ffed4e); color: #1a1a2e; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">✨ Divine Life Calendar</h1>
+            <p>Oracle Life App - Holy Spirit Guided Wisdom</p>
+            <div>
+                <span class="tab active" onclick="showTab('budget')">💰 Budget Dashboard</span>
+                <span class="tab" onclick="showTab('calendar')">📅 Life Calendar</span>
+            </div>
+        </div>
+
+        <!-- Budget Tab -->
+        <div id="budget-tab">
+            <div class="card">
+                <h2>💰 Monthly Budget Management</h2>
+                <div class="budget-grid">
+                    <div class="budget-card">
+                        <h3>Monthly Budget</h3>
+                        <div class="amount" id="total">$0</div>
+                    </div>
+                    <div class="budget-card">
+                        <h3>Total Spent</h3>
+                        <div class="amount">$0</div>
+                    </div>
+                    <div class="budget-card">
+                        <h3>Remaining</h3>
+                        <div class="amount" id="remaining">$0</div>
+                    </div>
+                    <div class="budget-card">
+                        <h3>Daily Average</h3>
+                        <div class="amount">$0</div>
+                    </div>
+                </div>
+                
+                <h3>Create Budget</h3>
+                <input type="number" id="budgetInput" placeholder="Enter monthly budget amount">
+                <div style="margin: 15px 0;">
+                    <div>🏢 Business (40%): $<span id="business">0</span></div>
+                    <div>🏠 Living (30%): $<span id="living">0</span></div>
+                    <div>🐷 Savings (20%): $<span id="savings">0</span></div>
+                    <div>✨ Spiritual (10%): $<span id="spiritual">0</span></div>
+                </div>
+                <button class="btn" onclick="createBudget()">Create Budget</button>
+            </div>
+        </div>
+
+        <!-- Calendar Tab -->
+        <div id="calendar-tab" class="hidden">
+            <div class="card">
+                <h2>👑 Divine Life Calendar</h2>
+                <div>
+                    <button class="btn" onclick="switchUser('kofie')">👑 Dr. Kofie</button>
+                    <button class="btn" onclick="switchUser('lachele')">👑 Dr. Lachele</button>
+                    <button class="btn" onclick="addEvent()">➕ New Event</button>
+                </div>
+                
+                <h3 id="monthTitle">January 2025</h3>
+                <div class="calendar">
+                    <div style="font-weight: bold;">Sun</div>
+                    <div style="font-weight: bold;">Mon</div>
+                    <div style="font-weight: bold;">Tue</div>
+                    <div style="font-weight: bold;">Wed</div>
+                    <div style="font-weight: bold;">Thu</div>
+                    <div style="font-weight: bold;">Fri</div>
+                    <div style="font-weight: bold;">Sat</div>
+                    <div class="day">29</div>
+                    <div class="day">30</div>
+                    <div class="day">31</div>
+                    <div class="day">1</div>
+                    <div class="day">2</div>
+                    <div class="day">3</div>
+                    <div class="day">4</div>
+                    <div class="day">5</div>
+                    <div class="day">6</div>
+                    <div class="day">7</div>
+                    <div class="day">8</div>
+                    <div class="day">9</div>
+                    <div class="day">10</div>
+                    <div class="day">11</div>
+                    <div class="day">12<br><span class="event-dot"></span><span class="event-dot"></span><span class="event-dot"></span></div>
+                    <div class="day">13</div>
+                    <div class="day">14</div>
+                    <div class="day">15</div>
+                    <div class="day">16</div>
+                    <div class="day">17</div>
+                    <div class="day">18</div>
+                    <div class="day">19</div>
+                    <div class="day">20</div>
+                    <div class="day">21</div>
+                    <div class="day">22</div>
+                    <div class="day">23</div>
+                    <div class="day">24</div>
+                    <div class="day">25</div>
+                    <div class="day">26</div>
+                    <div class="day">27</div>
+                    <div class="day">28</div>
+                    <div class="day">29</div>
+                    <div class="day">30</div>
+                    <div class="day">31</div>
+                    <div class="day">1</div>
+                </div>
+
+                <h3>📋 Sample Events (January 12th)</h3>
+                <div class="card">
+                    <div>🔵 6:00 AM - Morning Prayer & Bible Study</div>
+                    <div>🟠 7:30 AM - Morning Workout</div>
+                    <div>🟡 10:00 AM - Marcus Johnson - Biden Cut</div>
+                    <div>❤️ 6:00 PM - Date Night with Dr. Lachele</div>
+                    <div>💚 7:00 PM - Weekly Financial Review</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tab) {
+            document.getElementById('budget-tab').classList.toggle('hidden', tab !== 'budget');
+            document.getElementById('calendar-tab').classList.toggle('hidden', tab !== 'calendar');
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function createBudget() {
+            const amount = parseFloat(document.getElementById('budgetInput').value) || 0;
+            document.getElementById('total').textContent = '$' + amount.toLocaleString();
+            document.getElementById('remaining').textContent = '$' + amount.toLocaleString();
+            document.getElementById('business').textContent = (amount * 0.4).toLocaleString();
+            document.getElementById('living').textContent = (amount * 0.3).toLocaleString();
+            document.getElementById('savings').textContent = (amount * 0.2).toLocaleString();
+            document.getElementById('spiritual').textContent = (amount * 0.1).toLocaleString();
+            alert('Budget created successfully! 🎉');
+        }
+
+        function switchUser(user) {
+            alert('Switched to ' + (user === 'kofie' ? 'Dr. Kofie' : 'Dr. Lachele') + '! 👑');
+        }
+
+        function addEvent() {
+            const title = prompt('Event title:');
+            if (title) alert('Event "' + title + '" created! 🎉');
+        }
+
+        document.getElementById('budgetInput').addEventListener('input', function() {
+            const amount = parseFloat(this.value) || 0;
+            document.getElementById('business').textContent = (amount * 0.4).toLocaleString();
+            document.getElementById('living').textContent = (amount * 0.3).toLocaleString();
+            document.getElementById('savings').textContent = (amount * 0.2).toLocaleString();
+            document.getElementById('spiritual').textContent = (amount * 0.1).toLocaleString();
+        });
+    </script>
+</body>
+</html>

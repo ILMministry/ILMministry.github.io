@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divine Life Calendar - Oracle Life App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .app-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .app-subtitle {
+            color: #b0b0b0;
+            font-size: 1.1rem;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .nav-tab {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #f5f5f5;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-tab:hover, .nav-tab.active {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #1a1a2e;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Card Styles */
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffd700;
+            margin-bottom: 5px;
+        }
+
+        .card-subtitle {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        /* Budget Dashboard */
+        .budget-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .budget-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .budget-amount {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffd700;
+            margin: 10px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ade80, #22c55e);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Calendar Styles */
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .user-toggle {
+            display: flex;
+            gap: 10px;
+        }
+
+        .user-btn {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            color: #f5f5f5;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-btn.active {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #1a1a2e;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .calendar-header-cell {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px 5px;
+            text-align: center;
+            font-weight: 600;
+            color: #b0b0b0;
+        }
+
+        .calendar-cell {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px 5px;
+            min-height: 100px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .calendar-cell:hover {
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .calendar-cell.today {
+            background: rgba(255, 215, 0, 0.2);
+        }
+
+        .calendar-cell.other-month {
+            opacity: 0.4;
+        }
+
+        .date-number {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .event-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin: 2px;
+            display: inline-block;
+        }
+
+        .event-business { background: #ffd700; }
+        .event-spiritual { background: #8b5cf6; }
+        .event-financial { background: #22c55e; }
+        .event-health { background: #f97316; }
+        .event-family { background: #ec4899; }
+        .event-personal { background: #06b6d4; }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            color: #b0b0b0;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #f5f5f5;
+            font-size: 1rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #ffd700;
+            box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #1a1a2e;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #f5f5f5;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Event List */
+        .event-list {
+            margin-top: 20px;
+        }
+
+        .event-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid #ffd700;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .event-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .event-time {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 500px;
+            margin: 50px auto;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #b0b0b0;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .app-title {
+                font-size: 2rem;
+            }
+            
+            .budget-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .calendar-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .calendar-cell {
+                min-height: 60px;
+                padding: 8px 2px;
+            }
+        }
+
+        /* Hidden class */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="app-title">✨ Divine Life Calendar</h1>
+            <p class="app-subtitle">Oracle Life App - Holy Spirit Guided Wisdom</p>
+            
+            <!-- Navigation -->
+            <div class="nav-tabs">
+                <a href="#" class="nav-tab active" onclick="showTab('budget')">💰 Budget Dashboard</a>
+                <a href="#" class="nav-tab" onclick="showTab('calendar')">📅 Life Calendar</a>
+            </div>
+        </div>
+
+        <!-- Budget Dashboard Tab -->
+        <div id="budget-tab" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">💰 Monthly Budget Management</h2>
+                    <p class="card-subtitle">Track and optimize your financial allocations</p>
+                </div>
+
+                <!-- Budget Stats -->
+                <div class="budget-grid">
+                    <div class="budget-card">
+                        <h3>Monthly Budget</h3>
+                        <div class="budget-amount" id="total-budget">$0</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="budget-progress"></div>
+                        </div>
+                        <p>Total allocated</p>
+                    </div>
+                    <div class="budget-card">
+                        <h3>Total Spent</h3>
+                        <div class="budget-amount" style="color: #f97316;">$0</div>
+                        <p>This month</p>
+                    </div>
+                    <div class="budget-card">
+                        <h3>Remaining Budget</h3>
+                        <div class="budget-amount" style="color: #22c55e;" id="remaining-budget">$0</div>
+                        <p>Available to spend</p>
+                    </div>
+                    <div class="budget-card">
+                        <h3>Daily Average</h3>
+                        <div class="budget-amount" style="color: #06b6d4;">$0</div>
+                        <p>Per day spent</p>
+                    </div>
+                </div>
+
+                <!-- Budget Creation -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">➕ Create Monthly Budget</h3>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Total Monthly Budget</label>
+                        <input type="number" class="form-input" id="budget-input" placeholder="Enter total monthly budget">
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <h4>Suggested allocation:</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                                <span>🏢 Business (40%)</span>
+                                <span id="business-allocation">$0</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                                <span>🏠 Living (30%)</span>
+                                <span id="living-allocation">$0</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                                <span>🐷 Savings (20%)</span>
+                                <span id="savings-allocation">$0</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                                <span>✨ Spiritual (10%)</span>
+                                <span id="spiritual-allocation">$0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn" onclick="createBudget()">Create Budget</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calendar Tab -->
+        <div id="calendar-tab" class="tab-content hidden">
+            <div class="card">
+                <!-- Calendar Header -->
+                <div class="calendar-header">
+                    <div>
+                        <h2 class="card-title">👑 Divine Life Calendar</h2>
+                    </div>
+                    <div class="user-toggle">
+                        <button class="user-btn active" onclick="switchUser('kofie')">👑 Dr. Kofie</button>
+                        <button class="user-btn" onclick="switchUser('lachele')">👑 Dr. Lachele</button>
+                    </div>
+                    <div>
+                        <button class="btn" onclick="openEventModal()">➕ New Event</button>
+                    </div>
+                </div>
+
+                <!-- Calendar Navigation -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <button class="btn-secondary btn" onclick="changeMonth(-1)">← Previous</button>
+                    <h3 id="current-month">January 2025</h3>
+                    <button class="btn-secondary btn" onclick="changeMonth(1)">Next →</button>
+                </div>
+
+                <!-- Calendar Grid -->
+                <div class="calendar-grid">
+                    <div class="calendar-header-cell">Sun</div>
+                    <div class="calendar-header-cell">Mon</div>
+                    <div class="calendar-header-cell">Tue</div>
+                    <div class="calendar-header-cell">Wed</div>
+                    <div class="calendar-header-cell">Thu</div>
+                    <div class="calendar-header-cell">Fri</div>
+                    <div class="calendar-header-cell">Sat</div>
+                    <!-- Calendar days will be generated by JavaScript -->
+                    <div id="calendar-days"></div>
+                </div>
+
+                <!-- Sample Events -->
+                <div class="event-list">
+                    <h3 class="card-title">📋 Today's Events</h3>
+                    <div class="event-item">
+                        <div class="event-title">🔵 Morning Prayer & Bible Study</div>
+                        <div class="event-time">6:00 AM - 7:00 AM • Spiritual</div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-title">🟠 Morning Workout - Strength Training</div>
+                        <div class="event-time">7:30 AM - 8:30 AM • Health</div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-title">🟡 Marcus Johnson - Biden Cut & Hot Shave</div>
+                        <div class="event-time">10:00 AM - 11:30 AM • Business</div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-title">❤️ Date Night with Dr. Lachele</div>
+                        <div class="event-time">6:00 PM - 10:00 PM • Family</div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-title">💚 Weekly Financial Review</div>
+                        <div class="event-time">7:00 PM - 8:30 PM • Financial</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Modal -->
+    <div id="event-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeEventModal()">&times;</button>
+            <h3 class="card-title">➕ Create New Event</h3>
+            <form onsubmit="createEvent(event)">
+                <div class="form-group">
+                    <label class="form-label">Event Title</label>
+                    <input type="text" class="form-input" id="event-title" placeholder="Enter event title" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select class="form-input" id="event-category">
+                        <option value="business">🏢 Business Operations</option>
+                        <option value="spiritual">🔵 Spiritual Life</option>
+                        <option value="financial">💚 Financial Stewardship</option>
+                        <option value="health">🟠 Health & Vitality</option>
+                        <option value="family">❤️ Family & Personal</option>
+                        <option value="personal">🟣 Personal Development</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Start Time</label>
+                    <input type="datetime-local" class="form-input" id="event-start" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">End Time</label>
+                    <input type="datetime-local" class="form-input" id="event-end" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-input" id="event-description" rows="3" placeholder="Event description"></textarea>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button type="submit" class="btn">Create Event</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeEventModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentUser = 'kofie';
+        let currentDate = new Date();
+        let totalBudget = 0;
+        let events = [
+            {
+                title: "Morning Prayer & Bible Study",
+                category: "spiritual",
+                start: "2025-01-12T06:00",
+                end: "2025-01-12T07:00",
+                description: "Daily spiritual foundation"
+            },
+            {
+                title: "Morning Workout - Strength Training", 
+                category: "health",
+                start: "2025-01-12T07:30",
+                end: "2025-01-12T08:30",
+                description: "Upper body strength training + cardio"
+            },
+            {
+                title: "Marcus Johnson - Biden Cut & Hot Shave",
+                category: "business", 
+                start: "2025-01-12T10:00",
+                end: "2025-01-12T11:30",
+                description: "Client appointment"
+            },
+            {
+                title: "Date Night with Dr. Lachele",
+                category: "family",
+                start: "2025-01-12T18:00", 
+                end: "2025-01-12T22:00",
+                description: "Quality time together"
+            },
+            {
+                title: "Weekly Financial Review",
+                category: "financial",
+                start: "2025-01-12T19:00",
+                end: "2025-01-12T20:30", 
+                description: "Review weekly income and allocations"
+            }
+        ];
+
+        // Tab switching
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName + '-tab').classList.remove('hidden');
+            
+            // Update nav buttons
+            document.querySelectorAll('.nav-tab').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Initialize calendar if switching to calendar tab
+            if (tabName === 'calendar') {
+                generateCalendar();
+            }
+        }
+
+        // Budget functions
+        function updateBudgetAllocations() {
+            const input = document.getElementById('budget-input');
+            const amount = parseFloat(input.value) || 0;
+            
+            document.getElementById('business-allocation').textContent = '$' + (amount * 0.4).toLocaleString();
+            document.getElementById('living-allocation').textContent = '$' + (amount * 0.3).toLocaleString();
+            document.getElementById('savings-allocation').textContent = '$' + (amount * 0.2).toLocaleString();
+            document.getElementById('spiritual-allocation').textContent = '$' + (amount * 0.1).toLocaleString();
+        }
+
+        function createBudget() {
+            const input = document.getElementById('budget-input');
+            const amount = parseFloat(input.value);
+            
+            if (amount > 0) {
+                totalBudget = amount;
+                document.getElementById('total-budget').textContent = '$' + amount.toLocaleString();
+                document.getElementById('remaining-budget').textContent = '$' + amount.toLocaleString();
+                document.getElementById('budget-progress').style.width = '0%';
+                
+                showNotification('Budget created successfully! 🎉', 'success');
+            } else {
+                showNotification('Please enter a valid budget amount', 'error');
+            }
+        }
+
+        // Calendar functions
+        function generateCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            // Update month display
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"];
+            document.getElementById('current-month').textContent = monthNames[month] + ' ' + year;
+            
+            // Generate calendar days
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const startDate = new Date(firstDay);
+            startDate.setDate(startDate.getDate() - firstDay.getDay());
+            
+            let calendarHTML = '';
+            let currentDateLoop = new Date(startDate);
+            
+            for (let i = 0; i < 42; i++) {
+                const dayEvents = events.filter(event => {
+                    const eventDate = new Date(event.start);
+                    return eventDate.toDateString() === currentDateLoop.toDateString();
+                });
+                
+                const isCurrentMonth = currentDateLoop.getMonth() === month;
+                const isToday = currentDateLoop.toDateString() === new Date().toDateString();
+                
+                let cellClass = 'calendar-cell';
+                if (!isCurrentMonth) cellClass += ' other-month';
+                if (isToday) cellClass += ' today';
+                
+                let eventsHTML = '';
+                dayEvents.forEach(event => {
+                    eventsHTML += `<div class="event-dot event-${event.category}"></div>`;
+                });
+                
+                calendarHTML += `
+                    <div class="${cellClass}" onclick="selectDate('${currentDateLoop.toISOString().split('T')[0]}')">
+                        <div class="date-number">${currentDateLoop.getDate()}</div>
+                        <div>${eventsHTML}</div>
+                    </div>
+                `;
+                
+                currentDateLoop.setDate(currentDateLoop.getDate() + 1);
+            }
+            
+            document.getElementById('calendar-days').innerHTML = calendarHTML;
+        }
+
+        function changeMonth(direction) {
+            currentDate.setMonth(currentDate.getMonth() + direction);
+            generateCalendar();
+        }
+
+        function selectDate(dateString) {
+            showNotification(`Selected date: ${new Date(dateString).toLocaleDateString()}`, 'info');
+        }
+
+        function switchUser(user) {
+            currentUser = user;
+            document.querySelectorAll('.user-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            showNotification(`Switched to ${user === 'kofie' ? 'Dr. Kofie' : 'Dr. Lachele'}`, 'info');
+        }
+
+        // Event modal functions
+        function openEventModal() {
+            document.getElementById('event-modal').style.display = 'block';
+        }
+
+        function closeEventModal() {
+            document.getElementById('event-modal').style.display = 'none';
+            document.getElementById('event-title').value = '';
+            document.getElementById('event-description').value = '';
+        }
+
+        function createEvent(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('event-title').value;
+            const category = document.getElementById('event-category').value;
+            const start = document.getElementById('event-start').value;
+            const end = document.getElementById('event-end').value;
+            const description = document.getElementById('event-description').value;
+            
+            const newEvent = {
+                title,
+                category,
+                start,
+                end,
+                description
+            };
+            
+            events.push(newEvent);
+            closeEventModal();
+            generateCalendar();
+            showNotification(`Event "${title}" created successfully! 🎉`, 'success');
+        }
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? 'rgba(34, 197, 94, 0.9)' : type === 'error' ? 'rgba(239, 68, 68, 0.9)' : 'rgba(59, 130, 246, 0.9)'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                backdrop-filter: blur(10px);
+                z-index: 1001;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Event listeners
+        document.getElementById('budget-input').addEventListener('input', updateBudgetAllocations);
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            generateCalendar();
+            showNotification('Welcome to Divine Life Calendar! ✨', 'success');
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            const modal = document.getElementById('event-modal');
+            if (e.target === modal) {
+                closeEventModal();
+            }
+        });
+    </script>
+</body>
+</html>
