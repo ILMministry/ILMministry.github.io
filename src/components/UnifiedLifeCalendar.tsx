@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { 
-  Calendar, Clock, Plus, ChevronLeft, ChevronRight,
-  Crown, Cross, DollarSign, Heart, Scissors, Stethoscope, BookOpen, Users,
-  Bell, AlertTriangle, CheckCircle, Target,
-  Sunrise, Church, Building, Wallet
+  Calendar, Plus, ChevronLeft, ChevronRight,
+  Crown, Cross, DollarSign, Heart, Scissors, Stethoscope,
+  AlertTriangle, CheckCircle, Target
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { 
@@ -85,6 +84,7 @@ const UnifiedLifeCalendar: React.FC = () => {
       start: "2025-01-12T19:00:00",
       end: "2025-01-12T20:30:00",
       description: "Review weekly income, allocate to envelopes, plan investments",
+      recurring: "weekly",
       color: "bg-success",
       reminders: []
     },
@@ -96,6 +96,7 @@ const UnifiedLifeCalendar: React.FC = () => {
       start: "2025-01-12T07:30:00",
       end: "2025-01-12T08:30:00",
       description: "Upper body strength training + cardio",
+      recurring: "daily",
       color: "bg-health",
       reminders: []
     },
@@ -107,6 +108,7 @@ const UnifiedLifeCalendar: React.FC = () => {
       start: "2025-01-12T18:00:00",
       end: "2025-01-12T22:00:00",
       description: "Quality time together - dinner and conversation",
+      recurring: "weekly",
       color: "bg-family",
       reminders: []
     }
@@ -187,28 +189,28 @@ const UnifiedLifeCalendar: React.FC = () => {
     }
   };
 
-  // Get events for current view
-  const getEventsForView = (): CalendarEvent[] => {
-    return events.filter(event => {
-      if (!filterCategories[event.category]) return false;
+  // Get events for current view (currently unused but kept for future week view implementation)
+  // const getEventsForView = (): CalendarEvent[] => {
+  //   return events.filter(event => {
+  //     if (!filterCategories[event.category]) return false;
     
-      const eventDate = new Date(event.start);
-      const viewDate = currentView === 'month' ? currentDate : selectedDate;
+  //     const eventDate = new Date(event.start);
+  //     const viewDate = currentView === 'month' ? currentDate : selectedDate;
     
-      if (currentView === 'month') {
-        return eventDate.getMonth() === viewDate.getMonth() && 
-               eventDate.getFullYear() === viewDate.getFullYear();
-      } else if (currentView === 'week') {
-        const weekStart = new Date(viewDate);
-        weekStart.setDate(viewDate.getDate() - viewDate.getDay());
-        const weekEnd = new Date(weekStart);
-        weekEnd.setDate(weekStart.getDate() + 6);
-        return eventDate >= weekStart && eventDate <= weekEnd;
-      } else {
-        return eventDate.toDateString() === viewDate.toDateString();
-      }
-    });
-  };
+  //     if (currentView === 'month') {
+  //       return eventDate.getMonth() === viewDate.getMonth() && 
+  //              eventDate.getFullYear() === viewDate.getFullYear();
+  //     } else if (currentView === 'week') {
+  //       const weekStart = new Date(viewDate);
+  //       weekStart.setDate(viewDate.getDate() - viewDate.getDay());
+  //       const weekEnd = new Date(weekStart);
+  //       weekEnd.setDate(weekStart.getDate() + 6);
+  //       return eventDate >= weekStart && eventDate <= weekEnd;
+  //     } else {
+  //       return eventDate.toDateString() === viewDate.toDateString();
+  //     }
+  //   });
+  // };
 
   // Get events for specific date
   const getEventsForDate = (date: Date): CalendarEvent[] => {
