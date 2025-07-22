@@ -4,7 +4,7 @@ module.exports = {
       platforms: {
         ios: {
           sourceDir: '../node_modules/react-native-vector-icons/RNVectorIcons',
-          pbxprojPath: 'ios/ContactDetailsApp.xcodeproj/project.pbxproj',
+          pbxprojPath: 'ios/TheOracleSpaExperience.xcodeproj/project.pbxproj',
         },
         android: {
           sourceDir: '../node_modules/react-native-vector-icons/android',

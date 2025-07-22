@@ -1,23 +1,23 @@
-# Contact Details App
+# The Oracle Spa Experience
 
-A React Native mobile application that replicates a contact details and appointment management interface. This app features a modern, dark-themed UI with contact management, appointment scheduling, and service tracking capabilities.
+A React Native mobile application for The Oracle Spa that provides a sophisticated client management and appointment booking interface. This app features a modern, dark-themed UI with client management, spa appointment scheduling, and service tracking capabilities.
 
 ## Features
 
-- **Contact Details View**: Display contact information with avatar and name
-- **Quick Actions**: Schedule, Text, Call, and Email functionality
-- **Media Management**: Photos and Notes sections
-- **Payment Processing**: Checkout and payment tracking
-- **Appointment Management**: Mark as paid and delete appointments
-- **Services Tracking**: View associated services
+- **Client Details View**: Display client information with avatar and name
+- **Quick Actions**: Schedule spa appointments, Text, Call, and Email functionality
+- **Media Management**: Photos and Notes sections for client history
+- **Payment Processing**: Spa service checkout and payment tracking
+- **Appointment Management**: Mark spa services as paid and delete appointments
+- **Services Tracking**: View associated spa treatments and services
 
 ## UI Components
 
-- Dark theme with pink accent colors (#E91E63)
-- Gradient checkout button
-- Circular contact avatar with initials
-- Action buttons with icons
-- Modern card-based layout
+- Elegant dark theme with pink accent colors (#E91E63) - perfect for spa ambiance
+- Gradient checkout button for spa services
+- Circular client avatar with initials
+- Action buttons with spa-focused icons
+- Modern card-based layout for luxury feel
 - Page indicators for navigation
 
 ## Installation
@@ -25,7 +25,7 @@ A React Native mobile application that replicates a contact details and appointm
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd contact-details-app
+   cd the-oracle-spa-experience
    ```
 
 2. **Install dependencies**
@@ -68,11 +68,11 @@ yarn start
 ```
 src/
 ├── components/
-│   ├── ActionButton.tsx      # Reusable action button component
+│   ├── ActionButton.tsx      # Reusable spa action button component
 │   ├── ActionSection.tsx     # Photos/Notes section component
-│   └── ContactAvatar.tsx     # Contact avatar with initials
+│   └── ContactAvatar.tsx     # Client avatar with initials
 ├── screens/
-│   └── ContactDetailsScreen.tsx  # Main contact details screen
+│   └── ContactDetailsScreen.tsx  # Main client details screen
 App.tsx                       # Main app component with navigation
 ```
 
@@ -87,22 +87,22 @@ App.tsx                       # Main app component with navigation
 
 ## Features Implementation
 
-### Contact Display
+### Client Display
 - Circular avatar with initials
-- Contact name display
+- Client name display
 - Navigation header with back/edit buttons
 
 ### Action Buttons
-- Schedule appointments
-- Send text messages
-- Make phone calls
-- Send emails
+- Schedule spa appointments
+- Send text messages to clients
+- Make phone calls to clients
+- Send emails to clients
 
-### Management Features
-- Photo gallery access
-- Notes management
-- Payment processing
-- Appointment deletion
+### Spa Management Features
+- Photo gallery access for client history
+- Notes management for treatments
+- Spa service payment processing
+- Appointment deletion and management
 
 ### Visual Design
 - Dark background (#000)

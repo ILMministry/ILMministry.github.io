@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🚀 Setting up Contact Details App..."
+echo "🚀 Setting up The Oracle Spa Experience..."
 
 # Check if Node.js is installed
 if ! command -v node &> /dev/null; then
@@ -39,7 +39,7 @@ fi
 
 echo "✅ Setup complete!"
 echo ""
-echo "🎉 Your Contact Details App is ready!"
+echo "🎉 The Oracle Spa Experience is ready!"
 echo ""
 echo "To run the app:"
 echo "  📱 For iOS: npm run ios"

@@ -1,7 +1,7 @@
 {
-  "name": "contact-details-app",
+  "name": "the-oracle-spa-experience",
   "version": "1.0.0",
-  "description": "A mobile app for managing contact details and appointments",
+  "description": "The Oracle Spa Experience - A mobile app for managing spa appointments and client details",
   "main": "index.js",
   "scripts": {
     "start": "react-native start",

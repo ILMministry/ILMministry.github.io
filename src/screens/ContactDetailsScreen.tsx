@@ -29,7 +29,7 @@ const ContactDetailsScreen = () => {
   };
 
   const handleSchedule = () => {
-    Alert.alert('Schedule', 'Schedule appointment with Duane Beeman');
+    Alert.alert('Schedule', 'Schedule spa appointment with Duane Beeman');
   };
 
   const handleText = () => {
@@ -53,17 +53,17 @@ const ContactDetailsScreen = () => {
   };
 
   const handleCheckout = () => {
-    Alert.alert('Checkout', 'Process checkout');
+    Alert.alert('Checkout', 'Process spa service checkout');
   };
 
   const handleMarkAsPaid = () => {
-    Alert.alert('Mark as Paid', 'Mark appointment as paid');
+    Alert.alert('Mark as Paid', 'Mark spa appointment as paid');
   };
 
   const handleDeleteAppointment = () => {
     Alert.alert(
       'Delete Appointment',
-      'Are you sure you want to delete this appointment?',
+      'Are you sure you want to delete this spa appointment?',
       [
         {text: 'Cancel', style: 'cancel'},
         {text: 'Delete', style: 'destructive'},
